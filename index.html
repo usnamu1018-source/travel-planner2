@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 여행 일정 생성기</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ AI 여행 일정 생성기</h1>
+            <p>원하는 장소를 선택하면 AI가 완벽한 여행 일정을 만들어드립니다</p>
+        </div>
+
+        <div id="apiKeySetup" class="api-key-setup">
+            <h3>🔑 OpenAI API 키 설정</h3>
+            <p>AI 일정 생성을 위해 OpenAI API 키가 필요합니다.</p>
+            <p style="font-size: 0.9em; color: #856404; margin-top: 5px;">
+                API 키는 <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI 플랫폼</a>에서 발급받을 수 있습니다.
+            </p>
+            <input 
+                type="password" 
+                id="apiKeyInput" 
+                placeholder="sk-proj-... 형식의 API 키를 입력하세요"
+            />
+            <button onclick="saveApiKey()">저장하기</button>
+        </div>
+        
+        <div class="content">
+            <div class="map-section">
+                <div class="search-box">
+                    <input 
+                        id="searchInput" 
+                        type="text" 
+                        placeholder="장소를 검색하세요 (예: 경복궁, N서울타워, 명동)"
+                    />
+                </div>
+
+                <div class="map-click-info">
+                    <span>💡</span>
+                    <span><strong>지도를 직접 클릭</strong>하여 장소를 추가할 수 있습니다!</span>
+                </div>
+                
+                <div id="map"></div>
+
+                <div class="theme-selector">
+                    <h3>🎨 여행 테마 선택</h3>
+                    <div class="theme-options">
+                        <div class="theme-option active" onclick="selectTheme('family')">
+                            <div class="emoji">👨‍👩‍👧‍👦</div>
+                            <div class="label">가족여행</div>
+                        </div>
+                        <div class="theme-option" onclick="selectTheme('date')">
+                            <div class="emoji">💑</div>
+                            <div class="label">데이트</div>
+                        </div>
+                        <div class="theme-option" onclick="selectTheme('friends')">
+                            <div class="emoji">👯‍♂️</div>
+                            <div class="label">우정여행</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="selected-places">
+                    <h3>필수 방문 장소 (<span id="placeCount">0</span>)</h3>
+                    <div id="placesList"></div>
+                </div>
+                
+                <button id="generateBtn" class="generate-btn" disabled>
+                    ✨ AI 여행 일정 생성하기
+                </button>
+            </div>
+            
+            <div class="results-section">
+                <div id="results">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"></path>
+                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                        </svg>
+                        <h3>여행 일정이 여기에 표시됩니다</h3>
+                        <p>왼쪽 지도에서 방문하고 싶은 장소들을 선택해주세요</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDM8M9u0lVKvPv3Xe5QOCCXxqGkVL5yXpM&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>
